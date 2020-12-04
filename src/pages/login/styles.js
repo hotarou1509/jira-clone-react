@@ -59,3 +59,19 @@ export const BtnLogin = styled.button`
 	font-weight: bold;
 	border-radius: 2px;
 `;
+
+export const BtnSocial = styled.div`
+	display: flex;
+	justify-content: center;
+	background-color: white;
+	color: rgb(80, 95, 121);
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	padding: 10px;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px;
+	& > img {
+		height: 20px;
+		margin-right: 10px;
+	}
+`;

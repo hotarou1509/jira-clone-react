@@ -20,7 +20,7 @@ export const UserLoginTemplate = (propsRoute) => {
 									<img
 										src="./img/left_SVG.svg"
 										alt="left_SVG"
-										style={{position: "absolute", bottom: 0, left: 0, height: 350}}
+										style={{position: "absolute", bottom: 0, left: 0, width: '80%'}}
 										/>
 								</Col>
 								<Col span={8}>
@@ -32,7 +32,7 @@ export const UserLoginTemplate = (propsRoute) => {
 									<img
 										src="./img/right_SVG.svg"
 										alt="left_SVG"
-										style={{position: "absolute", bottom: 0, right:0, height: 350}}
+										style={{position: "absolute", bottom: 0, right:0, width: '80%'}}
 									/>
 								</Col>
 							</Row>

@@ -1,11 +1,24 @@
 import React from 'react';
-import { Button, Input } from 'antd';
-import { BtnLogin, Card, Logo } from './styles';
+import { Input } from 'antd';
+import { BtnLogin, BtnSocial, Card, Logo } from './styles';
 import LogoSVG from './LogoSVG';
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { connect } from 'react-redux';
+import { signinJiraAction } from '../../redux/actions/JiraActions';
 
-export default function Login() {
+function Login(props) {
+	const {
+		// values,
+		// touched,
+		// handleBlur,
+		errors,
+		handleChange,
+		handleSubmit,
+	} = props;
+
 	return (
-		<form className="container">
+		<form onSubmit={handleSubmit} className="container">
 			<div
 				className="d-flex justify-content-center align-items-center"
 				style={{ height: window.innerHeight }}
@@ -20,9 +33,11 @@ export default function Login() {
 							name="email"
 							type="text"
 							size="large"
-							placeholder="User name"
+							placeholder="Email"
 							style={{ minWidth: 300 }}
+							onChange={handleChange}
 						/>
+						<div className="text-danger">{errors.email}</div>
 						<Input
 							className="mt-3"
 							name="password"
@@ -30,71 +45,57 @@ export default function Login() {
 							size="large"
 							placeholder="Password"
 							style={{ minWidth: 300 }}
+							onChange={handleChange}
 						/>
-						<BtnLogin>Login</BtnLogin>
+						<div className="text-danger">{errors.password}</div>
+						<BtnLogin htmlType="submit">Login</BtnLogin>
 						<p
 							className="text-center mt-2 mb-0"
 							style={{ opacity: 0.8, fontSize: 12 }}
 						>
 							OR
 						</p>
-						<Button
-							className="mt-3"
-							size="large"
-							style={{
-								backgroundColor: 'white',
-								color: 'rgb(80, 95, 121)',
-								fontWeight: 'bold',
-								border: 'none',
-								boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 10px',
-							}}
-						>
+						<BtnSocial className="mt-3">
 							<img
 								src="./img/google-logo.svg"
-								alt=""
-								style={{ height: 20, marginRight: 10 }}
+								alt="google-logo"
 							/>
 							Continue with Google
-						</Button>
-						<Button
-							className="mt-3"
-							size="large"
-							style={{
-								backgroundColor: 'white',
-								color: 'rgb(80, 95, 121)',
-								fontWeight: 'bold',
-								border: 'none',
-								boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 10px',
-							}}
-						>
+						</BtnSocial>
+						<BtnSocial className="mt-3">
 							<img
 								src="./img/microsoft-logo.svg"
-								alt=""
-								style={{ height: 20, marginRight: 10 }}
+								alt="microsoft-logo"
 							/>
 							Continue with Microsoft
-						</Button>
-						<Button
-							className="mt-3"
-							size="large"
-							style={{
-								backgroundColor: 'white',
-								color: 'rgb(80, 95, 121)',
-								fontWeight: 'bold',
-								border: 'none',
-								boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 10px',
-							}}
-						>
-							<img
-								src="./img/apple-logo.svg"
-								alt=""
-								style={{ height: 20, marginRight: 10 }}
-							/>
+						</BtnSocial>
+						<BtnSocial className="mt-3">
+							<img src="./img/apple-logo.svg" alt="apple-logo" />
 							Continue with Apple
-						</Button>
+						</BtnSocial>
 					</Card>
 				</div>
 			</div>
 		</form>
 	);
 }
+
+const LoginWithFormik = withFormik({
+	mapPropsToValues: () => ({ email: '', password: '' }),
+
+	validationSchema: Yup.object().shape({
+		email: Yup.string()
+			.required('Email is required')
+			.email('Email is invalid'),
+		password: Yup.string()
+			.min(6, 'Password must have min 6 characters')
+			.max(32, 'Password must have max 32 charactres'),
+	}),
+	handleSubmit: ({ email, password }, { props, setSubmitting }) => {
+		props.dispatch(signinJiraAction(email, password));
+	},
+
+	displayName: 'BasicForm',
+})(Login);
+
+export default connect()(LoginWithFormik);
