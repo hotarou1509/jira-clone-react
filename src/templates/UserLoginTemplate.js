@@ -1,9 +1,21 @@
+import React, { useState, useEffect } from 'react';
 import Layout, { Content } from 'antd/lib/layout/layout';
 import { Row, Col } from 'antd';
-import React from 'react';
 import { Route } from 'react-router-dom';
 
 export const UserLoginTemplate = (propsRoute) => {
+	const [size, setSize] = useState({
+		height: window.innerHeight,
+	});
+
+	useEffect(() => {
+		window.onresize = () => {
+			setSize({
+				height: window.innerHeight,
+			});
+		};
+	}, []);
+
 	let { Component, ...restRoute } = propsRoute;
 
 	return (
@@ -12,16 +24,19 @@ export const UserLoginTemplate = (propsRoute) => {
 			render={(propsRoute) => {
 				return (
 					<>
-						<Layout>
+						<Layout style={{ height: size.height }}>
 							<Row>
-								<Col
-									span={8}
-								>
+								<Col span={8}>
 									<img
 										src="./img/left_SVG.svg"
 										alt="left_SVG"
-										style={{position: "absolute", bottom: 0, left: 0, width: '80%'}}
-										/>
+										style={{
+											position: 'absolute',
+											bottom: 0,
+											left: 0,
+											width: '80%',
+										}}
+									/>
 								</Col>
 								<Col span={8}>
 									<Content>
@@ -32,7 +47,12 @@ export const UserLoginTemplate = (propsRoute) => {
 									<img
 										src="./img/right_SVG.svg"
 										alt="left_SVG"
-										style={{position: "absolute", bottom: 0, right:0, width: '80%'}}
+										style={{
+											position: 'absolute',
+											bottom: 0,
+											right: 0,
+											width: '80%',
+										}}
 									/>
 								</Col>
 							</Row>

@@ -1,0 +1,26 @@
+import { USLOGIN } from '../const/JiraConst';
+
+const { USER_LOGIN } = require('../../util/const/settingSystem');
+
+let usLogin = {};
+
+if (localStorage.getItem(USER_LOGIN)) {
+	usLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
+}
+
+const stateDefault = {
+	userLogin: usLogin,
+};
+
+const UserLoginJiraReducer = (state = stateDefault, action) => {
+	switch (action.type) {
+		case USLOGIN: {
+			state.userLogin = action.userLogin;
+			return { ...state };
+		}
+		default:
+			return { ...state };
+	}
+};
+
+export default UserLoginJiraReducer;

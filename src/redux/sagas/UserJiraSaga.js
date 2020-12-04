@@ -1,5 +1,7 @@
 import {
-	// call,
+	call,
+	put,
+	select,
 	// fork,
 	// take,
 	// takeEvery,
@@ -9,6 +11,7 @@ import {
 } from 'redux-saga/effects';
 import { jiraService } from '../../services/JiraServices';
 import { TOKEN, USER_LOGIN } from '../../util/const/settingSystem';
+import { USLOGIN } from '../const/JiraConst';
 
 function* signinSaga(action) {
 	// yield put({
@@ -16,10 +19,17 @@ function* signinSaga(action) {
 	// })
 	// yield delay(500);
 	try {
-		const { data, status } = yield jiraService.signinJira(action.userLogin);
+		const { data } = yield call(() =>
+			jiraService.signinJira(action.userLogin),
+		);
 		/* Save token & userInfo to local storage */
 		localStorage.setItem(TOKEN, data.content.accessToken);
 		localStorage.setItem(USER_LOGIN, JSON.stringify(data.content));
+
+		yield put({ type: USLOGIN, userLogin: data.content });
+
+		let history = yield select((state) => state.HistoryReducer.history);
+		history.push('/home');
 	} catch (err) {
 		console.log(err.response.data);
 	}
