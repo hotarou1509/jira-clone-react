@@ -6,12 +6,11 @@ import {
 	// take,
 	// takeEvery,
 	// delay,
-	// put,
 	takeLatest,
 } from 'redux-saga/effects';
 import { jiraService } from '../../services/JiraServices';
 import { TOKEN, USER_LOGIN } from '../../util/const/settingSystem';
-import { USLOGIN } from '../const/JiraConst';
+import { USER_SIGNIN_API, USLOGIN } from '../const/JiraConst';
 
 function* signinSaga(action) {
 	// yield put({
@@ -39,5 +38,5 @@ function* signinSaga(action) {
 }
 
 export function* listenSignin() {
-	yield takeLatest('USER_SIGNIN_API', signinSaga);
+	yield takeLatest(USER_SIGNIN_API, signinSaga);
 }
