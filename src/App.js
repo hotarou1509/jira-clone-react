@@ -5,6 +5,7 @@ import CreateProject from './pages/createProject/CreateProject';
 import Home from './pages/home/Home';
 import indexJira from './pages/jira/indexJira';
 import Login from './pages/login/Login';
+import ProjectManagement from './pages/projectManagement/ProjectManagement';
 import { JiraTemplate } from './templates/JiraTemplate';
 import { UserLoginTemplate } from './templates/UserLoginTemplate';
 
@@ -23,8 +24,13 @@ export default function App() {
 			<JiraTemplate exact path="/jira" Component={indexJira} />
 			<JiraTemplate
 				exact
-				path="/projectsetting"
+				path="/createproject"
 				Component={CreateProject}
+			/>
+			<JiraTemplate
+				exact
+				path="/projectmanagement"
+				Component={ProjectManagement}
 			/>
 			<Route exact path="/" component={Home} />
 		</>
